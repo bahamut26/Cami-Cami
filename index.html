@@ -7,6 +7,7 @@
     <style>
         body {
             margin: 0;
+            padding: 0;
             overflow: hidden;
             background: linear-gradient(to right, #ffdde1, #ee9ca7); /* Fondo degradado */
             font-family: 'Arial', sans-serif;
@@ -15,14 +16,23 @@
 
         canvas {
             display: block;
+            width: 100%;
+            height: 100%;
         }
 
         h1 {
             color: #ff4081;
-            font-size: 3rem;
+            font-size: 2rem;  /* Tamaño reducido para dispositivos móviles */
             font-weight: bold;
-            margin-top: 50px;
+            margin-top: 20px;
             animation: titleAnimation 2s ease-in-out infinite;
+        }
+
+        .sub-title {
+            color: #ff4081;
+            font-size: 1rem;  /* Tamaño reducido para el subtítulo */
+            margin-top: 15px;
+            animation: subtitleAnimation 2s ease-in-out infinite;
         }
 
         @keyframes titleAnimation {
@@ -35,13 +45,6 @@
             100% {
                 color: #ff4081;
             }
-        }
-
-        .sub-title {
-            color: #ff4081;
-            font-size: 1.5rem;
-            margin-top: 20px;
-            animation: subtitleAnimation 2s ease-in-out infinite;
         }
 
         @keyframes subtitleAnimation {
@@ -58,8 +61,8 @@
     </style>
 </head>
 <body>
-    <h1>💖 ¡Eres la mejor amiga del mundo! te amo mucho y siempre estare para ti.  💖</h1>
-    
+    <h1>💖 ¡Eres la mejor amiga del mundo! 💖</h1>
+    <div class="sub-title">Toca la pantalla para que aparezcan más corazones. 💖</div>
 
     <canvas id="canvas"></canvas>
 
@@ -84,30 +87,30 @@
 
         function drawSunflower(x, y) {
             // Dibujar pétalos de girasol
-            for (let i = 0; i < 12; i++) {
-                drawPetal(x, y, 25, 50, (i * Math.PI) / 6, "#ffcc00");  // Pétalos amarillos
+            for (let i = 0; i < 8; i++) {  /* Reducción de número de pétalos */
+                drawPetal(x, y, 20, 40, (i * Math.PI) / 6, "#ffcc00");  // Pétalos amarillos
             }
 
             // Centro del girasol
             ctx.beginPath();
-            let gradient = ctx.createRadialGradient(x, y, 5, x, y, 20);
+            let gradient = ctx.createRadialGradient(x, y, 5, x, y, 15);  // Centro más pequeño
             gradient.addColorStop(0, "orange");
             gradient.addColorStop(1, "yellow");
-            ctx.arc(x, y, 20, 0, Math.PI * 2);
+            ctx.arc(x, y, 15, 0, Math.PI * 2);  // Reducción del tamaño
             ctx.fillStyle = gradient;
             ctx.fill();
 
             // Tallo
             ctx.beginPath();
-            ctx.moveTo(x, y + 20);
-            ctx.lineTo(x, y + 80);  // Tallo más largo
+            ctx.moveTo(x, y + 15);
+            ctx.lineTo(x, y + 60);  // Tallo más corto
             ctx.strokeStyle = "green";
-            ctx.lineWidth = 5;
+            ctx.lineWidth = 4;
             ctx.stroke();
 
             // Hojas (dos hojas a cada lado)
-            drawPetal(x - 40, y + 60, 20, 10, Math.PI / 4, "green");  // Hoja izquierda
-            drawPetal(x + 40, y + 60, 20, 10, -Math.PI / 4, "green"); // Hoja derecha
+            drawPetal(x - 30, y + 40, 15, 8, Math.PI / 4, "green");  // Hoja izquierda
+            drawPetal(x + 30, y + 40, 15, 8, -Math.PI / 4, "green"); // Hoja derecha
         }
 
         function drawHeart(x, y, size, color) {
@@ -123,12 +126,11 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             // Dibujar girasoles
-            drawSunflower(150, 250);
-            drawSunflower(400, 300);
+            drawSunflower(100, 150);
+            drawSunflower(300, 200);
+            drawSunflower(500, 180);
             drawSunflower(700, 220);
-            drawSunflower(1000, 280);
-            drawSunflower(1200, 400);  // Girasol adicional
-            drawSunflower(500, 500);   // Girasol adicional
+            drawSunflower(850, 300);  // Girasol adicional
 
             // Dibujar y animar corazones
             for (let i = 0; i < hearts.length; i++) {
@@ -148,7 +150,7 @@
             hearts.push({
                 x: event.clientX,
                 y: event.clientY,
-                size: 15 + Math.random() * 10,
+                size: 10 + Math.random() * 6,  // Tamaño reducido de los corazones
                 color: `rgb(${200 + Math.random() * 55}, 0, ${100 + Math.random() * 155})`,
                 speed: 2 + Math.random() * 3
             });
