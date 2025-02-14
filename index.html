@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Girasoles en Forma de Corazón</title>
+    <title>Girasoles Mágicos</title>
     <style>
         body {
             margin: 0;
@@ -26,23 +26,10 @@
             font-weight: bold;
             margin-top: 20px;
         }
-
-        @keyframes titleAnimation {
-            0% {
-                color: #ff4081;
-            }
-            50% {
-                color: #e91e63;
-            }
-            100% {
-                color: #ff4081;
-            }
-        }
-
     </style>
 </head>
 <body>
-    <h1>💖 Eres la mejor amiga del mundo, te amo mucho Cami 💖</h1>
+    <h1>💖 Girasoles en Formas Hermosas 💖</h1>
 
     <canvas id="canvas"></canvas>
 
@@ -51,8 +38,6 @@
         const ctx = canvas.getContext("2d");
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-
-        let hearts = [];
 
         function drawPetal(x, y, width, height, angle, color) {
             ctx.save();
@@ -93,24 +78,24 @@
             drawPetal(x + 30, y + 40, 15, 8, -Math.PI / 4, "green"); // Hoja derecha
         }
 
-        function drawHeartShape() {
+        function drawSunflowerPattern() {
+            // Coordenadas organizadas en dos filas de tres girasoles
             const positions = [
-                {x: canvas.width / 2 - 70, y: canvas.height / 2 - 70},
-                {x: canvas.width / 2 + 70, y: canvas.height / 2 - 70},
-                {x: canvas.width / 2 - 100, y: canvas.height / 2 - 30},
-                {x: canvas.width / 2 + 100, y: canvas.height / 2 - 30},
-                {x: canvas.width / 2 - 50, y: canvas.height / 2 + 40},
-                {x: canvas.width / 2 + 50, y: canvas.height / 2 + 40},
-                {x: canvas.width / 2 - 150, y: canvas.height / 2 + 90},
-                {x: canvas.width / 2 + 150, y: canvas.height / 2 + 90}
+                {x: canvas.width / 2 - 150, y: canvas.height / 2 - 100}, // Fila superior - izquierda
+                {x: canvas.width / 2, y: canvas.height / 2 - 100}, // Fila superior - centro
+                {x: canvas.width / 2 + 150, y: canvas.height / 2 - 100}, // Fila superior - derecha
+                {x: canvas.width / 2 - 150, y: canvas.height / 2 + 100}, // Fila inferior - izquierda
+                {x: canvas.width / 2, y: canvas.height / 2 + 100}, // Fila inferior - centro
+                {x: canvas.width / 2 + 150, y: canvas.height / 2 + 100}, // Fila inferior - derecha
             ];
 
+            // Dibujar girasoles en cada posición
             positions.forEach(pos => {
                 drawSunflower(pos.x, pos.y);
             });
         }
 
-        drawHeartShape();
+        drawSunflowerPattern(); // Llamada para dibujar los girasoles en el patrón
 
     </script>
 </body>
