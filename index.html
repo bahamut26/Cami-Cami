@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Girasoles Mágicos</title>
+    <title>Rosas Mágicas con Corazones</title>
     <style>
         body {
             margin: 0;
@@ -25,11 +25,43 @@
             font-size: 2rem;  /* Tamaño reducido para dispositivos móviles */
             font-weight: bold;
             margin-top: 20px;
+            animation: titleAnimation 2s ease-in-out infinite;
+        }
+
+        .sub-title {
+            color: #ff4081;
+            font-size: 1rem;  /* Tamaño reducido para el subtítulo */
+            margin-top: 15px;
+            animation: subtitleAnimation 2s ease-in-out infinite;
+        }
+
+        @keyframes titleAnimation {
+            0% {
+                color: #ff4081;
+            }
+            50% {
+                color: #e91e63;
+            }
+            100% {
+                color: #ff4081;
+            }
+        }
+
+        @keyframes subtitleAnimation {
+            0% {
+                color: #ff4081;
+            }
+            50% {
+                color: #e91e63;
+            }
+            100% {
+                color: #ff4081;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>💖 Girasoles en Formas Hermosas 💖</h1>
+    <h1>💖 ¡Eres la mejor amiga del mundo! Te amo mucho, estaré para ti siempre💖</h1>
 
     <canvas id="canvas"></canvas>
 
@@ -38,6 +70,8 @@
         const ctx = canvas.getContext("2d");
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+
+        let hearts = [];
 
         function drawPetal(x, y, width, height, angle, color) {
             ctx.save();
@@ -78,25 +112,51 @@
             drawPetal(x + 30, y + 40, 15, 8, -Math.PI / 4, "green"); // Hoja derecha
         }
 
-        function drawSunflowerPattern() {
-            // Coordenadas organizadas en dos filas de tres girasoles
-            const positions = [
-                {x: canvas.width / 2 - 150, y: canvas.height / 2 - 100}, // Fila superior - izquierda
-                {x: canvas.width / 2, y: canvas.height / 2 - 100}, // Fila superior - centro
-                {x: canvas.width / 2 + 150, y: canvas.height / 2 - 100}, // Fila superior - derecha
-                {x: canvas.width / 2 - 150, y: canvas.height / 2 + 100}, // Fila inferior - izquierda
-                {x: canvas.width / 2, y: canvas.height / 2 + 100}, // Fila inferior - centro
-                {x: canvas.width / 2 + 150, y: canvas.height / 2 + 100}, // Fila inferior - derecha
-            ];
-
-            // Dibujar girasoles en cada posición
-            positions.forEach(pos => {
-                drawSunflower(pos.x, pos.y);
-            });
+        function drawHeart(x, y, size, color) {
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.bezierCurveTo(x - size, y - size, x - size * 2, y + size / 2, x, y + size * 1.5);
+            ctx.bezierCurveTo(x + size * 2, y + size / 2, x + size, y - size, x, y);
+            ctx.fill();
         }
 
-        drawSunflowerPattern(); // Llamada para dibujar los girasoles en el patrón
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+            // Dibujar 6 girasoles organizados en filas
+            drawSunflower(100, 150);
+            drawSunflower(300, 150);
+            drawSunflower(100, 300);
+            drawSunflower(300, 300);
+            drawSunflower(100, 450);
+            drawSunflower(300, 450);
+
+            // Dibujar y animar corazones
+            for (let i = 0; i < hearts.length; i++) {
+                hearts[i].y -= hearts[i].speed;
+                hearts[i].x += Math.sin(hearts[i].y * 0.02) * 2; // Movimiento oscilante
+                drawHeart(hearts[i].x, hearts[i].y, hearts[i].size, hearts[i].color);
+
+                if (hearts[i].y < -20) {
+                    hearts.splice(i, 1); // Eliminar corazones fuera de la pantalla
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        canvas.addEventListener("click", (event) => {
+            hearts.push({
+                x: event.clientX,
+                y: event.clientY,
+                size: 10 + Math.random() * 6,  // Tamaño reducido de los corazones
+                color: `rgb(${200 + Math.random() * 55}, 0, ${100 + Math.random() * 155})`,
+                speed: 2 + Math.random() * 3
+            });
+        });
+
+        animate();
     </script>
 </body>
 </html>
