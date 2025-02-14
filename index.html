@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rosas Mágicas con Corazones</title>
+    <title>Girasoles en Forma de Corazón</title>
     <style>
         body {
             margin: 0;
@@ -25,14 +25,6 @@
             font-size: 2rem;  /* Tamaño reducido para dispositivos móviles */
             font-weight: bold;
             margin-top: 20px;
-            animation: titleAnimation 2s ease-in-out infinite;
-        }
-
-        .sub-title {
-            color: #ff4081;
-            font-size: 1rem;  /* Tamaño reducido para el subtítulo */
-            margin-top: 15px;
-            animation: subtitleAnimation 2s ease-in-out infinite;
         }
 
         @keyframes titleAnimation {
@@ -47,21 +39,10 @@
             }
         }
 
-        @keyframes subtitleAnimation {
-            0% {
-                color: #ff4081;
-            }
-            50% {
-                color: #e91e63;
-            }
-            100% {
-                color: #ff4081;
-            }
-        }
     </style>
 </head>
 <body>
-    <h1>💖 ¡Eres la mejor amiga del mundo! Te amo mucho, estaré para ti siempre💖</h1>
+    <h1>💖 Eres la mejor amiga del mundo, te amo mucho Cami 💖</h1>
 
     <canvas id="canvas"></canvas>
 
@@ -112,54 +93,25 @@
             drawPetal(x + 30, y + 40, 15, 8, -Math.PI / 4, "green"); // Hoja derecha
         }
 
-        function drawHeart(x, y, size, color) {
-            ctx.fillStyle = color;
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-            ctx.bezierCurveTo(x - size, y - size, x - size * 2, y + size / 2, x, y + size * 1.5);
-            ctx.bezierCurveTo(x + size * 2, y + size / 2, x + size, y - size, x, y);
-            ctx.fill();
-        }
+        function drawHeartShape() {
+            const positions = [
+                {x: canvas.width / 2 - 70, y: canvas.height / 2 - 70},
+                {x: canvas.width / 2 + 70, y: canvas.height / 2 - 70},
+                {x: canvas.width / 2 - 100, y: canvas.height / 2 - 30},
+                {x: canvas.width / 2 + 100, y: canvas.height / 2 - 30},
+                {x: canvas.width / 2 - 50, y: canvas.height / 2 + 40},
+                {x: canvas.width / 2 + 50, y: canvas.height / 2 + 40},
+                {x: canvas.width / 2 - 150, y: canvas.height / 2 + 90},
+                {x: canvas.width / 2 + 150, y: canvas.height / 2 + 90}
+            ];
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Dibujar girasoles
-            drawSunflower(100, 150);
-            drawSunflower(300, 200);
-            drawSunflower(500, 180);
-            drawSunflower(700, 220);
-            drawSunflower(850, 300);  // Girasol adicional
-            drawSunflower(1200, 180); // Girasol adicional
-            drawSunflower(400, 350);  // Girasol adicional
-            drawSunflower(650, 500);  // Girasol adicional
-            drawSunflower(950, 380);  // Girasol adicional
-
-            // Dibujar y animar corazones
-            for (let i = 0; i < hearts.length; i++) {
-                hearts[i].y -= hearts[i].speed;
-                hearts[i].x += Math.sin(hearts[i].y * 0.02) * 2; // Movimiento oscilante
-                drawHeart(hearts[i].x, hearts[i].y, hearts[i].size, hearts[i].color);
-
-                if (hearts[i].y < -20) {
-                    hearts.splice(i, 1); // Eliminar corazones fuera de la pantalla
-                }
-            }
-
-            requestAnimationFrame(animate);
-        }
-
-        canvas.addEventListener("click", (event) => {
-            hearts.push({
-                x: event.clientX,
-                y: event.clientY,
-                size: 10 + Math.random() * 6,  // Tamaño reducido de los corazones
-                color: `rgb(${200 + Math.random() * 55}, 0, ${100 + Math.random() * 155})`,
-                speed: 2 + Math.random() * 3
+            positions.forEach(pos => {
+                drawSunflower(pos.x, pos.y);
             });
-        });
+        }
 
-        animate();
+        drawHeartShape();
+
     </script>
 </body>
 </html>
